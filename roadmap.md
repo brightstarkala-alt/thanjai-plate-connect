@@ -1,0 +1,3 @@
+- [ ] Build Stage 1 mobile-first customer ordering UI with warm nutri-box visual direction
+- [ ] Add a visible admin operations preview without backend claims
+- [ ] Validate the preview and leave Supabase unconnected pending user configuration
