@@ -2,4 +2,4 @@
 - [x] Simplify ordering into date selection, per-date box quantities, and review
 - [x] Restrict multi-date selection to the current Monday–Sunday week
 - [x] Keep the admin preview visible without backend claims
-- [ ] Validate the simplified preview on mobile and desktop
+- [x] Validate the simplified preview on mobile and desktop
