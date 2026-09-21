@@ -50,7 +50,7 @@ function getIndiaToday() {
     day: "2-digit",
   }).formatToParts(new Date());
   const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
-  return new Date(Date.UTC(Number(values.year), Number(values.month) - 1, Number(values.day), 12));
+  return new Date(Date.UTC(Number(values["year"]), Number(values["month"]) - 1, Number(values["day"]), 12));
 }
 
 function getCurrentWeek(): WeeklyDate[] {
@@ -141,13 +141,16 @@ function CustomerView() {
 
   const changeQuantity = (key: string, box: keyof BoxQuantities, amount: number) => {
     setNotice(false);
-    setOrdersByDate((current) => ({
-      ...current,
-      [key]: {
-        ...current[key],
-        [box]: Math.max(0, (current[key]?.[box] ?? 0) + amount),
-      },
-    }));
+    setOrdersByDate((current) => {
+      const quantities = current[key] ?? { boxOne: 0, boxTwo: 0 };
+      return {
+        ...current,
+        [key]: {
+          ...quantities,
+          [box]: Math.max(0, quantities[box] + amount),
+        },
+      };
+    });
   };
 
   const weekLabel = `${week[0]?.date} ${week[0]?.month} – ${week[6]?.date} ${week[6]?.month}`;
