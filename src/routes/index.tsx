@@ -281,7 +281,13 @@ function CustomerView() {
       <div className="mt-8">
         <StepTitle
           number="2"
-          title={plan === "days" ? "Pick your delivery days" : "Pick the starting Monday"}
+          title={
+            plan === "days"
+              ? "Pick your delivery days"
+              : plan === "week"
+                ? "Pick the starting Monday"
+                : "Pick your month"
+          }
         />
 
         {plan === "days" ? (
