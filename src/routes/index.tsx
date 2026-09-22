@@ -108,6 +108,19 @@ function getMondays(count: number): DayOption[] {
   });
 }
 
+function getMonths(count: number): DayOption[] {
+  const today = getIndiaToday();
+  const firstOfMonth = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth() + 1, 1, 12));
+
+  return Array.from({ length: count }, (_, index) => {
+    const monthStart = new Date(Date.UTC(firstOfMonth.getUTCFullYear(), firstOfMonth.getUTCMonth() + index, 1, 12));
+    const firstMondayOffset = (8 - monthStart.getUTCDay()) % 7;
+    const value = new Date(monthStart);
+    value.setUTCDate(monthStart.getUTCDate() + firstMondayOffset);
+    return describe(value);
+  });
+}
+
 function addDays(key: string, amount: number) {
   const value = new Date(`${key}T12:00:00Z`);
   value.setUTCDate(value.getUTCDate() + amount);
