@@ -319,9 +319,10 @@ function CustomerView() {
         ) : (
           <>
             <div className="mt-4 grid gap-2 sm:grid-cols-2">
-              {mondays.map((item) => {
+              {(plan === "month" ? months : mondays).map((item) => {
                 const selected = startMonday === item.key;
                 const end = addDays(item.key, planDayCount - 1);
+                const start = describe(new Date(`${item.key}T12:00:00Z`));
                 return (
                   <Button
                     key={item.key}
@@ -335,12 +336,18 @@ function CustomerView() {
                     className={`h-auto justify-start gap-3 rounded-xl px-4 py-4 text-left ${selected ? "bg-leaf text-primary-foreground hover:bg-leaf-deep" : "border-line-soft bg-surface text-ink hover:bg-leaf-soft"}`}
                   >
                     <span className="grid size-10 shrink-0 place-items-center rounded-full bg-surface font-serif text-lg font-semibold text-leaf">
-                      {item.date}
+                      {plan === "month" ? item.month : item.date}
                     </span>
                     <span className="min-w-0">
-                      <span className="block font-semibold">Monday {item.fullLabel.replace("Mon, ", "")}</span>
+                      <span className="block font-semibold">
+                        {plan === "month"
+                          ? new Intl.DateTimeFormat("en-IN", { month: "long", year: "numeric", timeZone: "UTC" }).format(
+                              new Date(`${item.key}T12:00:00Z`),
+                            )
+                          : `Monday ${item.fullLabel.replace("Mon, ", "")}`}
+                      </span>
                       <span className="block text-xs opacity-80">
-                        {planDayCount} days · until {end.fullLabel}
+                        {planDayCount} days · starts {start.fullLabel} · until {end.fullLabel}
                       </span>
                     </span>
                     {selected && <Check className="ml-auto size-5 shrink-0" />}
@@ -349,7 +356,9 @@ function CustomerView() {
               })}
             </div>
             <p className="mt-3 text-sm text-ink-soft">
-              {plan === "week" ? "Weekly plans" : "Monthly plans"} always begin on a Monday.
+              {plan === "week"
+                ? "Weekly plans always begin on a Monday."
+                : "Monthly plans run 30 days and begin on the month's first Monday."}
             </p>
           </>
         )}
