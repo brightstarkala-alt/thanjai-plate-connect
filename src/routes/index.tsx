@@ -178,6 +178,7 @@ function HomePage() {
 function CustomerView() {
   const week = useMemo(getCurrentWeek, []);
   const mondays = useMemo(() => getMondays(4), []);
+  const months = useMemo(() => getMonths(4), []);
 
   const [plan, setPlan] = useState<PlanType>("days");
   const [pickedDays, setPickedDays] = useState<string[]>([]);
